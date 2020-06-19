@@ -1,5 +1,7 @@
 # 面试相关知识总结
 
+![workflow badge](https://github.com/akusoft/interview/workflows/github-pages/badge.svg)
+
 文档托管在 GitHub Pages，在线访问地址：https://akusoft.github.io/interview
 
 此文档由 [mdBook](https://github.com/rust-lang/mdBook) 生成，
