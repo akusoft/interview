@@ -1,0 +1,609 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Interview Knowledge</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="computer-organization/index.html"><strong aria-hidden="true">2.</strong> 计算机组成原理</a></li><li class="chapter-item expanded "><a href="dsa/index.html"><strong aria-hidden="true">3.</strong> 数据结构与算法</a></li><li class="chapter-item expanded "><a href="os/index.html"><strong aria-hidden="true">4.</strong> 操作系统</a></li><li class="chapter-item expanded "><a href="computer-network/index.html"><strong aria-hidden="true">5.</strong> 计算机网络</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="computer-network/socket.html"><strong aria-hidden="true">5.1.</strong> 套接字编程</a></li><li class="chapter-item expanded "><a href="computer-network/udp.html"><strong aria-hidden="true">5.2.</strong> UDP</a></li><li class="chapter-item expanded "><a href="computer-network/tcp.html"><strong aria-hidden="true">5.3.</strong> TCP</a></li></ol></li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">6.</strong> 数据库</a></li><li class="chapter-item expanded "><a href="system-design.html"><strong aria-hidden="true">7.</strong> 系统设计</a></li><li class="chapter-item expanded "><a href="python.html"><strong aria-hidden="true">8.</strong> Python</a></li><li class="chapter-item expanded "><a href="website.html"><strong aria-hidden="true">9.</strong> 网站</a></li><li class="chapter-item expanded "><a href="spider.html"><strong aria-hidden="true">10.</strong> 爬虫</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Interview Knowledge</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<p>面试相关知识总结</p>
+<h1><a class="header" href="#计算机组成原理" id="计算机组成原理">计算机组成原理</a></h1>
+<h1><a class="header" href="#数据结构与算法" id="数据结构与算法">数据结构与算法</a></h1>
+<h1><a class="header" href="#操作系统" id="操作系统">操作系统</a></h1>
+<h2><a class="header" href="#1-线程与进程的区别" id="1-线程与进程的区别">1. 线程与进程的区别</a></h2>
+<p>进程拥有各自独立的内存地址空间，而线程共享同一进程的内存地址空间。</p>
+<p>中断（广义）：</p>
+<ul>
+<li>中断（狭义）</li>
+<li>异常</li>
+<li>系统调用</li>
+</ul>
+<h2><a class="header" href="#进程的基本状态" id="进程的基本状态">进程的基本状态</a></h2>
+<ul>
+<li>等待态：等待外设</li>
+<li>就绪态：等待CPU</li>
+<li>运行态：占有CPU</li>
+</ul>
+<h2><a class="header" href="#调度算法" id="调度算法">调度算法</a></h2>
+<ul>
+<li>FIFO（先来先服务算法）</li>
+<li>Round-Robin（时间片轮转调度算法）</li>
+</ul>
+<h1><a class="header" href="#计算机网络" id="计算机网络">计算机网络</a></h1>
+<h2><a class="header" href="#tcpip-五层模型" id="tcpip-五层模型">TCP/IP 五层模型</a></h2>
+<ul>
+<li>应用层 —— 报文：HTTP、DNS、FTP、SMTP、SSH</li>
+<li>运输层 —— 报文段（segment）：TCP、UDP</li>
+<li>网络层 —— 数据报（data-gram）：IP、ICMP</li>
+<li>数据链路层 —— 数据帧：Ethernet、802.11</li>
+<li>物理层：</li>
+</ul>
+<h2><a class="header" href="#ip" id="ip">IP</a></h2>
+<p>IP 即<strong>网际协议</strong>，它为主机之间提供了逻辑通信。IP 的服务模型是<strong>尽力而为交付服务</strong>（best-effort delivery service）。这意味着 IP 尽它“最大的努力”在通信的主机之间交付报文段，但它并不做任何确保。特别是，它不确保报文段的交付，不保证报文段的按序交付，不保证报文段中数据的完整性。由于这些原因，IP 被称为<strong>不可靠服务（unreliable service）</strong>。</p>
+<h2><a class="header" href="#udp-和-tcp" id="udp-和-tcp">UDP 和 TCP</a></h2>
+<p>UDP 和 TCP 最基本的责任是，将两个端系统间 IP 的交付服务扩展为运行在端系统上的两个进程之间的交付服务。将主机间交付扩展到进程间交付被称为<strong>运输层的多路复用</strong>（transport-layer multiplexing）与<strong>多路分解</strong>（demultiplexing）。</p>
+<p>UDP 和 TCP 还可以通过在其报文段首部中包括差错检查字段而提供完整性检查。进程到进程的数据交付和差错检查是两种最低限度的运输层服务，也是 UDP 所能提供的仅有的两种服务。特别是，与 IP 一样，UDP 也是一种不可靠的服务，即不能保证一个进程所发送的数据能够完整无缺地（或全部！）到达目的进程。</p>
+<p>另一方面，TCP 为应用程序提供了几种附加服务：</p>
+<ul>
+<li><strong>可靠数据传输</strong>（reliable data transfer）</li>
+<li><strong>拥塞控制</strong>（congestion control）</li>
+</ul>
+<h2><a class="header" href="#多路复用与多路分解" id="多路复用与多路分解">多路复用与多路分解</a></h2>
+<p>一个进程（作为网络应用的一部分）有一个或多个<strong>套接字</strong>（socket），它相当于从网络向进程传递数据和从进程向网络传递数据的门户。</p>
+<p>将运输层报文段中的数据交付到正确的套接字的工作称为<strong>多路分解</strong>（demultiplexing）。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为<strong>多路复用</strong>（multiplexing）。</p>
+<p>运输层多路复用要求：</p>
+<ol>
+<li>套接字有唯一标识符；</li>
+<li>每个报文段有特殊字段来指示该报文段所要交付到的套接字。</li>
+</ol>
+<p>如下图所示：</p>
+<p>这些特殊字段是<strong>源端口号字段</strong>（source port number field）和<strong>目的端口号字段</strong>（destination port number field）。</p>
+<p>一个 UDP 套接字是由一个二元组全面标识的，该二元组包含一个目的 IP 地址和一个目的端口号。</p>
+<p>TCP 套接字和 UDP 套接字之间的一个细微差别是，TCP 套接字是由一个四元组（源 IP 地址，源端口号、目的 IP 地址、目的端口号）来标识的。</p>
+<p>事实上，当今的高性能 Web 服务器通常只使用一个进程，但是为每个新的客户连接创建一个具有新连接套接字的新线程。</p>
+<p>运输层最低限度必须提供一种复用/分解服务，以便在网络层与正确的应用级进程之间传递数据。</p>
+<h1><a class="header" href="#套接字编程" id="套接字编程">套接字编程</a></h1>
+<h1><a class="header" href="#udp" id="udp">UDP</a></h1>
+<p>UDP 即<strong>用户数据报协议</strong>，它为调用它的应用程序提供了一种不可靠、无连接的服务。</p>
+<p>UDP 无非就是对网络层协议增加了一点（多路）复用/（多路）分解服务而已。</p>
+<p>使用 UDP 的上层协议：</p>
+<ul>
+<li>DNS</li>
+<li>SNMP</li>
+</ul>
+<p>选择使用 UDP 的原因：</p>
+<ul>
+<li>关于发送什么数据以及何时发送的应用层控制更为精细。</li>
+<li>无须连接建立。</li>
+<li>无连接状态。</li>
+<li>分组首部开销小。每个 TCP 报文段都有 20 字节的首部开销，而 UDP 仅有 8 字节的开销。</li>
+</ul>
+<p>使用 UDP 的应用是可能实现可靠数据传输的，这可通过在应用程序自身中建立可靠性机制来完成。</p>
+<h2><a class="header" href="#udp-报文段结构" id="udp-报文段结构">UDP 报文段结构</a></h2>
+<p>UDP 报文段结构如图所示：</p>
+<h2><a class="header" href="#udp-检验和" id="udp-检验和">UDP 检验和</a></h2>
+<p>虽然 UDP 提供差错检测，但它对差错恢复无能为力。UDP 的某种实现只是丢弃受损的报文段；其他实现是将受损的报文段交给应用程序并给出警告。</p>
+<p>KCP、QUIC</p>
+<h1><a class="header" href="#tcp" id="tcp">TCP</a></h1>
+<p>TCP即传输控制协议，它为调用它的应用程序提供了一种可靠的、面向连接的服务。</p>
+<h2><a class="header" href="#可靠数据传输" id="可靠数据传输">可靠数据传输</a></h2>
+<h2><a class="header" href="#拥塞控制" id="拥塞控制">拥塞控制</a></h2>
+<h1><a class="header" href="#数据库" id="数据库">数据库</a></h1>
+<h2><a class="header" href="#1-mysql的事务" id="1-mysql的事务">1. MySQL的事务</a></h2>
+<p>事务（Transaction）是数据库并发控制的基本单位，事务可以看作是一系列SQL语句的集合，事务必须要么全部执行成功，要么全部执行失败（回滚）。</p>
+<p>事务的四个基本特性（ACID）：</p>
+<ul>
+<li>原子性（Atomicity）：一个事务中所有操作全部完成或失败</li>
+<li>一致性（Consistency）：事务开始和结束之后数据完整性没有被破坏</li>
+<li>隔离性（Isolation）：允许多个事务同时对数据库修改和读写</li>
+<li>持久性（Durability）：事务结束之后，修改是永久的不会丢失</li>
+</ul>
+<h2><a class="header" href="#2-mysql的常用数据类型" id="2-mysql的常用数据类型">2. MySQL的常用数据类型</a></h2>
+<ul>
+<li>文本类
+<ul>
+<li>CHAR</li>
+<li>VARCHAR</li>
+<li>TEXT</li>
+<li>LONGTEXT</li>
+</ul>
+</li>
+<li>数值类
+<ul>
+<li>TINYINT</li>
+<li>INT</li>
+<li>BIGINT</li>
+<li>FLOAT</li>
+<li>DOUBLE</li>
+</ul>
+</li>
+<li>日期类
+<ul>
+<li>DATETIME</li>
+<li>TIMESTAMP</li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#3-mysql的索引" id="3-mysql的索引">3. MySQL的索引</a></h2>
+<p>索引是<strong>数据表</strong>中一个或者多个列进行排序的数据结构，索引能够大幅提升检索速度，创建、更新索引本身也会耗费空间和时间。</p>
+<p>索引类型：</p>
+<ul>
+<li>普通索引（CREATE INDEX）</li>
+<li>唯一索引，索引列的值必须唯一（CREATE UNIQUE INDEX）</li>
+<li>多列索引</li>
+<li>主键索引，一个表只能有一个</li>
+<li>全文索引，InnoDB不支持</li>
+</ul>
+<h2><a class="header" href="#4-mysql语法" id="4-mysql语法">4. MySQL语法</a></h2>
+<p>添加和删除数据库：</p>
+<pre><code class="language-SQL"># 显示当前已存在数据库
+show databases;
+
+# 创建数据库gc
+create database gc;
+
+# 删除数据库gc
+drop database gc;
+
+# 使用数据库gc
+use gc;
+</code></pre>
+<p>添加和删除数据表：</p>
+<pre><code class="language-SQL"># 显示当前已存在数据表
+show tables;
+
+# 创建数据表account
+create table account
+(
+id int,
+name varchar(255)
+);
+
+# 显示数据表account
+describe account;
+
+# 删除数据表account
+drop table account;
+</code></pre>
+<p>添加和删除列：</p>
+<pre><code class="language-SQL">向数据表account中添加整形且不为空默认为1的c1列
+alter table account add c1 int(11) not null default 1;
+
+# 删除数据表account中的c1列
+alter table account drop c1;
+</code></pre>
+<p>修改列或数据表：</p>
+<pre><code class="language-SQL"># 修改数据表account中city列为newcity列，且类型为varchar
+alter table account change city newcity varchar(255);
+
+# 修改数据表account的名称为newaccount
+alter table account rename newaccount;
+</code></pre>
+<p>查看或插入表数据：</p>
+<pre><code class="language-SQL"># 向数据表book中插入一行数据，其中id列为3，title列为't'，content列为'c'
+insert into book values(3,'t','c');
+
+# 向数据表book中插入一行数据，其中content列为'c'
+insert into book(content) values ('c');
+
+# 将数据表book1中id列不为1的所有数据插入到数据表book2中
+insert into book2 select * from book1 where id != 1;
+
+# 从数据表book中查看所有列的数据
+select * from book;
+
+# 从数据表book中查看title和content列的数据
+select title,content from book;
+
+# 从数据表book中查看id列不为空的所有列的数据
+select * from book where id is null;
+
+# 从数据表book中查看title列的数据（去重）
+select distinct title from book;
+
+# 从数据表book中查看pages列大于0的数据，结果先按content列降序排列，再按pages列升序排列
+select * from book where pages &gt; 0 order by content desc,pages asc;
+
+# 从数据表book中查看所有列的数据，结果按照id列升序排列，并从下标为2的行数据开始，取2行
+select * from book order by id limit 2,2;
+
+# 从数据表book中查看title列的数据等于'sun'或'color'的所有列的数据
+select * from book where title in ('sun', 'color')；
+
+# 从数据表book中查看1 &lt;= id &lt;= 3的所有列的数据
+select * from book where id between 1 and 3;
+
+# 从数据表book中查看id &lt;= 1且id &gt;= 3的所有列的数据
+select * from book where id not between 1 and 3;
+
+# 从数据表book中查看title列的数据包含'color'的所有列的数据
+select * from book where title like '%color%';
+
+# 从数据表book中查看title列的数据不包含'color'的所有列的数据
+select * from book where title not like '%color%';
+</code></pre>
+<p>更新表数据：</p>
+<pre><code class="language-SQL"># 修改数据表book中id列为3的数据的content列为'day'
+update book set content = 'day' where id = 3;
+</code></pre>
+<h2><a class="header" href="#5-mysql的默认端口为3306可通过修改etcmycnf文件更改端口" id="5-mysql的默认端口为3306可通过修改etcmycnf文件更改端口">5. MySQL的默认端口为<code>3306</code>，可通过修改<code>/etc/my.cnf</code>文件更改端口</a></h2>
+<h2><a class="header" href="#6-mysql的默认存储引擎为myisam除此之外也可以使用innodb" id="6-mysql的默认存储引擎为myisam除此之外也可以使用innodb">6. MySQL的默认存储引擎为<code>MyISAM</code>，除此之外也可以使用<code>InnoDB</code></a></h2>
+<h2><a class="header" href="#7-redis的常用数据类型" id="7-redis的常用数据类型">7. Redis的常用数据类型</a></h2>
+<ul>
+<li>String</li>
+<li>List</li>
+<li>Set</li>
+<li>Hash</li>
+<li>Sort Set</li>
+</ul>
+<h1><a class="header" href="#系统设计" id="系统设计">系统设计</a></h1>
+<h1><a class="header" href="#python" id="python">Python</a></h1>
+<h2><a class="header" href="#1-cpython中的gil" id="1-cpython中的gil">1. CPython中的GIL</a></h2>
+<p>GIL，全称Global Interpreter Lock，即<strong>全局解释器锁</strong>。</p>
+<p>由于CPython解释器的内存管理并不是线程安全的，为了保护多线程情况下对Python对象的访问，所以CPython使用简单的锁机制避免多个线程同时执行字节码。</p>
+<p>GIL的影响（限制了程序的多核执行）：</p>
+<ul>
+<li>同一个时间只能有一个线程执行字节码</li>
+<li>CPU密集型程序难以利用多核优势</li>
+<li>IO期间会释放GIL，对IO密集型程序影响不大</li>
+</ul>
+<p>如何规避GIL的影响（区分CPU和IO密集型程序）：</p>
+<ul>
+<li>CPU密集可以使用多进程+进程池</li>
+<li>IO密集可以使用多线程/协程</li>
+</ul>
+<h2><a class="header" href="#2-python的值类型和引用类型" id="2-python的值类型和引用类型">2. Python的值类型和引用类型</a></h2>
+<ul>
+<li>值类型：对象本身不允许修改</li>
+<li>引用类型：对象本身可以修改</li>
+</ul>
+<h2><a class="header" href="#3-python的数据类型" id="3-python的数据类型">3. Python的数据类型</a></h2>
+<ul>
+<li>不可变（值类型）：Number、String、Tuple</li>
+<li>可变（引用类型）：List、Dictionary、Set</li>
+</ul>
+<h2><a class="header" href="#4-list作为参数会被改掉" id="4-list作为参数会被改掉">4. list作为参数会被改掉</a></h2>
+<pre><code class="language-python">lis = [1, 2, 3]
+
+
+def foo(v):
+    v[1] = 4
+    return v
+
+
+print(foo(lis))
+print(lis)
+
+Output:
+[1, 4, 3]
+[1, 4, 3]
+</code></pre>
+<h2><a class="header" href="#5-node和tornado快是因为事件驱动和异步非阻塞" id="5-node和tornado快是因为事件驱动和异步非阻塞">5. Node和Tornado快是因为：事件驱动和异步非阻塞</a></h2>
+<h2><a class="header" href="#6-python是非真实并行的假多线程对cpu密集型不友善" id="6-python是非真实并行的假多线程对cpu密集型不友善">6. Python是非真实并行的“假多线程”，对CPU密集型不友善</a></h2>
+<h2><a class="header" href="#7-python中数组与链表的区别" id="7-python中数组与链表的区别">7. Python中数组与链表的区别</a></h2>
+<p>数组中存储的数据类型必须相同，且数组一经确定，大小即固定不变；而列表中的元素类型可不同，列表的大小也不固定。Python中没有数组。</p>
+<h2><a class="header" href="#8-python实现斐波那契数列" id="8-python实现斐波那契数列">8. Python实现斐波那契数列</a></h2>
+<pre><code class="language-python">def fib(n):
+    if n &lt;= 1:
+        return n
+    else:
+        return fib(n - 1) + fib(n - 2)
+
+
+for i in range(10):
+    print(fib(i))
+</code></pre>
+<h2><a class="header" href="#9-python是动态强类型语言" id="9-python是动态强类型语言">9. Python是动态强类型语言</a></h2>
+<p>动态还是静态指的是编译期还是运行期确定类型，强类型指的是不会发生隐式类型转换。</p>
+<h2><a class="header" href="#10-鸭子类型" id="10-鸭子类型">10. 鸭子类型</a></h2>
+<p>关注点在对象的行为，而不是类型（duck typing）。</p>
+<p>鸭子类型更关注接口而非类型。</p>
+<h2><a class="header" href="#11-monkey-patch指运行时替换" id="11-monkey-patch指运行时替换">11. monkey patch指运行时替换</a></h2>
+<h2><a class="header" href="#12-自省introspection是指运行时判断一个对象的类型的能力" id="12-自省introspection是指运行时判断一个对象的类型的能力">12. 自省（Introspection）是指运行时判断一个对象的类型的能力</a></h2>
+<h2><a class="header" href="#13-is与的区别" id="13-is与的区别">13. is与=的区别</a></h2>
+<h2><a class="header" href="#14-列表和字典推导" id="14-列表和字典推导">14. 列表和字典推导</a></h2>
+<pre><code class="language-python">[i for i in range(10) if i % 2 == 0]
+</code></pre>
+<h2><a class="header" href="#15-python之禅" id="15-python之禅">15. Python之禅</a></h2>
+<pre><code class="language-python">import this
+</code></pre>
+<h2><a class="header" href="#16-python-2与python-3的差异" id="16-python-2与python-3的差异">16. Python 2与Python 3的差异</a></h2>
+<p>Python 3 改进：</p>
+<ul>
+<li>
+<p><code>print</code>成为函数（Python 2 中为关键字）</p>
+</li>
+<li>
+<p>编码问题。Python 3 不再有Unicode对象，默认str就是unicode（Python 2 中默认为字节）。</p>
+</li>
+<li>
+<p>除法变化。Python 3 除号返回浮点数。</p>
+</li>
+<li>
+<p>增加类型注解（type hint）。可帮助IDE实现类型检查</p>
+<pre><code class="language-python">def hello(name: str) -&gt; str
+    return 'hello ' + name
+</code></pre>
+</li>
+<li>
+<p>优化的<code>super()</code>方便直接调用父类函数。</p>
+</li>
+<li>
+<p>高级解包操作。<code>a, b, *rest = range(10)</code></p>
+</li>
+<li>
+<p>限定关键字参数</p>
+</li>
+<li>
+<p>Python 3 重新抛出异常不会丢失栈信息。<code>raise from</code></p>
+</li>
+<li>
+<p>一切返回迭代器，如<code>range</code>、<code>zip</code>、<code>map</code>、<code>dict.values</code>等。（Python 2 中<code>range</code>、<code>map</code>返回列表）</p>
+</li>
+<li>
+<p>生成的<code>pyc</code>文件统一放到__pycache__</p>
+</li>
+<li>
+<p>一些内置库的修改，如<code>urllib</code>、<code>selector</code>等</p>
+</li>
+<li>
+<p>性能优化等，如<code>dict</code></p>
+</li>
+</ul>
+<p>Python 3 新增：</p>
+<ul>
+<li>yield from 链接子生成器</li>
+<li>asyncio内置库，async/await原生协程支持异步编程</li>
+<li>新的内置库，如enum、mock、asyncio、ipaddress、concurrent.futures等</li>
+</ul>
+<p>兼容2/3的工具：</p>
+<ul>
+<li><code>six</code>模块</li>
+<li><code>2to3</code>等工具转换代码</li>
+<li><code>__future__</code></li>
+</ul>
+<h2><a class="header" href="#17-args与kwargs" id="17-args与kwargs">17. <code>*args</code>与<code>**kwargs</code></a></h2>
+<p>函数有4种参数形式：固定参数、默认参数、可变参数args、可变参数kwargs。</p>
+<p>用来处理可变参数</p>
+<p><code>*args</code>被打包成tuple（<code>*</code>），<code>**kwargs</code>被打包成dict（<code>**</code>）。</p>
+<h2><a class="header" href="#18-python中的异常" id="18-python中的异常">18. Python中的异常</a></h2>
+<p>所有异常都继承自<code>BaseException</code>类，要定义自己的异常需要继承自<code>Exception</code>类。</p>
+<h2><a class="header" href="#19-python的生成器" id="19-python的生成器">19. Python的生成器</a></h2>
+<p>生成器就是可以生成值的函数，当一个函数里有了<code>yield</code>关键字就成了生成器，生成器可以挂起执行并且保持当前执行的状态。</p>
+<h2><a class="header" href="#20-python的装饰器decorator" id="20-python的装饰器decorator">20. Python的装饰器（decorator）</a></h2>
+<h2><a class="header" href="#21-协程" id="21-协程">21. 协程</a></h2>
+<p>Python 2 中基于生成器的协程：
+Python 3 中的原生协程：</p>
+<h2><a class="header" href="#22-单元测试" id="22-单元测试">22. 单元测试</a></h2>
+<p>Python中常用的单元测试相关库：<code>pytest</code>。</p>
+<h2><a class="header" href="#23-深拷贝与浅拷贝" id="23-深拷贝与浅拷贝">23. 深拷贝与浅拷贝</a></h2>
+<p>深拷贝：
+浅拷贝：
+实现深拷贝：</p>
+<h2><a class="header" href="#24-一行代码实现1-100之和" id="24-一行代码实现1-100之和">24. 一行代码实现1-100之和</a></h2>
+<pre><code class="language-python">result = sum(range(1, 101))
+</code></pre>
+<h2><a class="header" href="#25-列举5个python标准库" id="25-列举5个python标准库">25. 列举5个Python标准库</a></h2>
+<ul>
+<li><code>os</code>：封装了常见的文件和目录操作</li>
+<li><code>urllib</code>：网络请求模块，包括对url的结构解析</li>
+<li><code>asyncio</code>：Python的异步库，基于事件循环的协程模块</li>
+<li><code>re</code>：正则表达式模块</li>
+<li><code>itertools</code>：提供了操作生成器的一些模块</li>
+</ul>
+<h2><a class="header" href="#26-列表去重" id="26-列表去重">26. 列表去重</a></h2>
+<pre><code class="language-python">lis = [1, 2, 3, 4, 5, 4]
+list(set(lis))
+</code></pre>
+<h2><a class="header" href="#27-单引号双引号三引号的区别" id="27-单引号双引号三引号的区别">27. 单引号、双引号、三引号的区别</a></h2>
+<p>单引号和双引号无区别。三引号又分为三双引号和三单引号，这两者也无区别，三引号主要用于文档字符串，会保留格式信息。三引号也用于多行注释。</p>
+<h2><a class="header" href="#28-单下划线和双下划线区别" id="28-单下划线和双下划线区别">28. 单下划线和双下划线区别</a></h2>
+<h1><a class="header" href="#网站" id="网站">网站</a></h1>
+<h2><a class="header" href="#1-实现简单的登录逻辑" id="1-实现简单的登录逻辑">1. 实现简单的登录逻辑</a></h2>
+<h1><a class="header" href="#爬虫" id="爬虫">爬虫</a></h1>
+<h2><a class="header" href="#1-正则表达式验证邮箱" id="1-正则表达式验证邮箱">1. 正则表达式验证邮箱</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
