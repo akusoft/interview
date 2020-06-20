@@ -1,8 +1,7 @@
 # 面试相关知识总结
 
-[![Join the chat at https://gitter.im/akusoft/interview](https://badges.gitter.im/akusoft/interview.svg)](https://gitter.im/akusoft/interview?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 ![workflow badge](https://github.com/akusoft/interview/workflows/github-pages/badge.svg)
+[![Join the chat at https://gitter.im/akusoft/interview](https://badges.gitter.im/akusoft/interview.svg)](https://gitter.im/akusoft/interview?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 文档托管在 GitHub Pages，在线访问地址：https://akusoft.github.io/interview
 
