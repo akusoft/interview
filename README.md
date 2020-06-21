@@ -3,6 +3,7 @@
 ![workflow badge](https://github.com/akusoft/interview/workflows/github-pages/badge.svg)
 [![Join the chat at https://gitter.im/akusoft/interview](https://badges.gitter.im/akusoft/interview.svg)](https://gitter.im/akusoft/interview?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/akusoft/interview)
+![GitHub repo size](https://img.shields.io/github/repo-size/akusoft/interview)
 
 文档托管在 GitHub Pages，在线访问地址：https://akusoft.github.io/interview
 
