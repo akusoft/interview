@@ -11,7 +11,7 @@
   - [套接字编程](computer-network/socket.md)
   - [UDP](computer-network/udp.md)
   - [TCP](computer-network/tcp.md)
-- [数据库](database.md)
+- [数据库](database/README.md)
 - [系统设计](system-design.md)
 - [Python](python.md)
 - [Java](java/README.md)
