@@ -13,6 +13,7 @@
   - [TCP](computer-network/tcp.md)
 - [数据库](database/README.md)
 - [系统设计](system-design.md)
+- [设计模式](design-pattern.md)
 - [Python](python.md)
 - [Java](java/README.md)
   - [基础](java/base.md)
