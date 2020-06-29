@@ -5,7 +5,7 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/akusoft/interview)
 ![GitHub repo size](https://img.shields.io/github/repo-size/akusoft/interview)
 
-文档托管在 GitHub Pages，在线访问地址：https://akusoft.github.io/interview
+文档托管在 GitHub Pages，在线访问地址：<https://akusoft.github.io/interview>
 
 此文档由 [mdBook](https://github.com/rust-lang/mdBook) 生成，
 使用 [Markdown](https://guides.github.com/features/mastering-markdown/) 语法编写，
