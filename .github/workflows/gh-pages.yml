@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Lint Code Base
+        uses: docker://github/super-linter:v2.2.0
 
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1
