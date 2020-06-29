@@ -18,8 +18,6 @@
 
 &emsp;&emsp;Service ticket (ST) ：由TGT生成的一次性票据，用于验证，只能用一次。相当于server发给client一张票，然后client拿着这是个票再来找server验证，看看是不是server签发的。就像是我给了你一张我的照片，然后你拿照片再来问我，这个照片是不是你。。。没错，就是这么无聊。
 
-### 术语
-
 &emsp;&emsp;1. 用户访问网站，第一次来，重定向到 CAS Server，发现没有cookie，所以再重定向到CAS Server端的登录页面，并且URL带有网站地址，便于认证成功后跳转
 
 形如 http ://cas-server:8100/login?service=http ://localhost:8081
