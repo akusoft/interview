@@ -24,7 +24,7 @@ JWT 相比这种传统的 Token 认证，其大致流程为：
 ### JWT 实现过程：
 
 1. 用户提交用户名和密码给服务端，若登录成功，则使用 JWT 创建一个 Token，并返回给用户。其 Token 如下所示：
-    ```
+    ```text
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     ```
     此 Token 由 3 段字符串组成，并用 `.` 连接起来，具体而言：
