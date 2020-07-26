@@ -152,17 +152,17 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#python" id="python">Python</a></h1>
-<h2><a class="header" href="#1-python的值类型和引用类型" id="1-python的值类型和引用类型">1. Python的值类型和引用类型</a></h2>
+<h2><a class="header" href="#python-的值类型和引用类型" id="python-的值类型和引用类型">Python 的值类型和引用类型</a></h2>
 <ul>
 <li>值类型：对象本身不允许修改</li>
 <li>引用类型：对象本身可以修改</li>
 </ul>
-<h2><a class="header" href="#2-python的数据类型" id="2-python的数据类型">2. Python的数据类型</a></h2>
+<h2><a class="header" href="#python-的数据类型" id="python-的数据类型">Python 的数据类型</a></h2>
 <ul>
 <li>不可变（值类型）：Number、String、Tuple</li>
 <li>可变（引用类型）：List、Dictionary、Set</li>
 </ul>
-<h2><a class="header" href="#3-list作为参数会被改掉" id="3-list作为参数会被改掉">3. list作为参数会被改掉</a></h2>
+<h2><a class="header" href="#list-作为参数会被改掉" id="list-作为参数会被改掉"><code>list</code> 作为参数会被改掉</a></h2>
 <pre><code class="language-python">lis = [1, 2, 3]
 
 
@@ -178,11 +178,11 @@ Output:
 [1, 4, 3]
 [1, 4, 3]
 </code></pre>
-<h2><a class="header" href="#4-node和tornado快是因为事件驱动和异步非阻塞" id="4-node和tornado快是因为事件驱动和异步非阻塞">4. Node和Tornado快是因为：事件驱动和异步非阻塞</a></h2>
-<h2><a class="header" href="#5-python是非真实并行的假多线程对cpu密集型不友善" id="5-python是非真实并行的假多线程对cpu密集型不友善">5. Python是非真实并行的“假多线程”，对CPU密集型不友善</a></h2>
-<h2><a class="header" href="#6-python中数组与链表的区别" id="6-python中数组与链表的区别">6. Python中数组与链表的区别</a></h2>
-<p>数组中存储的数据类型必须相同，且数组一经确定，大小即固定不变；而列表中的元素类型可不同，列表的大小也不固定。Python中没有数组。</p>
-<h2><a class="header" href="#7-python实现斐波那契数列" id="7-python实现斐波那契数列">7. Python实现斐波那契数列</a></h2>
+<h2><a class="header" href="#node-和-tornado-快是因为事件驱动和异步非阻塞" id="node-和-tornado-快是因为事件驱动和异步非阻塞">Node 和 Tornado 快是因为：事件驱动和异步非阻塞</a></h2>
+<h2><a class="header" href="#python-是非真实并行的假多线程对-cpu-密集型不友善" id="python-是非真实并行的假多线程对-cpu-密集型不友善">Python 是非真实并行的“假多线程”，对 CPU 密集型不友善</a></h2>
+<h2><a class="header" href="#python-中数组与链表的区别" id="python-中数组与链表的区别">Python 中数组与链表的区别</a></h2>
+<p>数组中存储的数据类型必须相同，且数组一经确定，大小即固定不变；而列表中的元素类型可不同，列表的大小也不固定。</p>
+<h2><a class="header" href="#python-实现斐波那契数列" id="python-实现斐波那契数列">Python 实现斐波那契数列</a></h2>
 <pre><code class="language-python">def fib(n):
     if n &lt;= 1:
         return n
@@ -193,21 +193,21 @@ Output:
 for i in range(10):
     print(fib(i))
 </code></pre>
-<h2><a class="header" href="#8-python是动态强类型语言" id="8-python是动态强类型语言">8. Python是动态强类型语言</a></h2>
+<h2><a class="header" href="#python-是动态强类型语言" id="python-是动态强类型语言">Python 是动态强类型语言</a></h2>
 <p>动态还是静态指的是编译期还是运行期确定类型，强类型指的是不会发生隐式类型转换。</p>
-<h2><a class="header" href="#9-鸭子类型" id="9-鸭子类型">9. 鸭子类型</a></h2>
+<h2><a class="header" href="#鸭子类型" id="鸭子类型">鸭子类型</a></h2>
 <p>关注点在对象的行为，而不是类型（duck typing）。</p>
 <p>鸭子类型更关注接口而非类型。</p>
-<h2><a class="header" href="#10-monkey-patch指运行时替换" id="10-monkey-patch指运行时替换">10. monkey patch指运行时替换</a></h2>
-<h2><a class="header" href="#11-自省introspection是指运行时判断一个对象的类型的能力" id="11-自省introspection是指运行时判断一个对象的类型的能力">11. 自省（Introspection）是指运行时判断一个对象的类型的能力</a></h2>
-<h2><a class="header" href="#12-is与的区别" id="12-is与的区别">12. is与=的区别</a></h2>
-<h2><a class="header" href="#13-列表和字典推导" id="13-列表和字典推导">13. 列表和字典推导</a></h2>
+<h2><a class="header" href="#monkey-patch指运行时替换" id="monkey-patch指运行时替换">monkey patch指运行时替换</a></h2>
+<h2><a class="header" href="#自省introspection是指运行时判断一个对象的类型的能力" id="自省introspection是指运行时判断一个对象的类型的能力">自省（Introspection）是指运行时判断一个对象的类型的能力</a></h2>
+<h2><a class="header" href="#is-与--的区别" id="is-与--的区别"><code>is</code> 与 <code>=</code> 的区别</a></h2>
+<h2><a class="header" href="#列表和字典推导" id="列表和字典推导">列表和字典推导</a></h2>
 <pre><code class="language-python">[i for i in range(10) if i % 2 == 0]
 </code></pre>
-<h2><a class="header" href="#14-python之禅" id="14-python之禅">14. Python之禅</a></h2>
+<h2><a class="header" href="#python-之禅" id="python-之禅">Python 之禅</a></h2>
 <pre><code class="language-python">import this
 </code></pre>
-<h2><a class="header" href="#15-python-2与python-3的差异" id="15-python-2与python-3的差异">15. Python 2与Python 3的差异</a></h2>
+<h2><a class="header" href="#python-2-与-python-3-的差异" id="python-2-与-python-3-的差异">Python 2 与 Python 3 的差异</a></h2>
 <p>Python 3 改进：</p>
 <ul>
 <li>
@@ -262,28 +262,28 @@ for i in range(10):
 <li><code>2to3</code>等工具转换代码</li>
 <li><code>__future__</code></li>
 </ul>
-<h2><a class="header" href="#16-args与kwargs" id="16-args与kwargs">16. <code>*args</code>与<code>**kwargs</code></a></h2>
+<h2><a class="header" href="#args-与-kwargs" id="args-与-kwargs"><code>*args</code> 与 <code>**kwargs</code></a></h2>
 <p>函数有4种参数形式：固定参数、默认参数、可变参数args、可变参数kwargs。</p>
 <p>用来处理可变参数</p>
 <p><code>*args</code>被打包成tuple（<code>*</code>），<code>**kwargs</code>被打包成dict（<code>**</code>）。</p>
-<h2><a class="header" href="#17-python中的异常" id="17-python中的异常">17. Python中的异常</a></h2>
-<p>所有异常都继承自<code>BaseException</code>类，要定义自己的异常需要继承自<code>Exception</code>类。</p>
-<h2><a class="header" href="#18-python的生成器" id="18-python的生成器">18. Python的生成器</a></h2>
-<p>生成器就是可以生成值的函数，当一个函数里有了<code>yield</code>关键字就成了生成器，生成器可以挂起执行并且保持当前执行的状态。</p>
-<h2><a class="header" href="#19-python的装饰器decorator" id="19-python的装饰器decorator">19. Python的装饰器（decorator）</a></h2>
-<h2><a class="header" href="#20-协程" id="20-协程">20. 协程</a></h2>
+<h2><a class="header" href="#python-中的异常" id="python-中的异常">Python 中的异常</a></h2>
+<p>所有异常都继承自 <code>BaseException</code> 类，要定义自己的异常需要继承自 <code>Exception</code> 类。</p>
+<h2><a class="header" href="#python-的生成器" id="python-的生成器">Python 的生成器</a></h2>
+<p>生成器就是可以生成值的函数，当一个函数里有了 <code>yield</code> 关键字就成了生成器，生成器可以挂起执行并且保持当前执行的状态。</p>
+<h2><a class="header" href="#python-的装饰器decorator" id="python-的装饰器decorator">Python 的装饰器（decorator）</a></h2>
+<h2><a class="header" href="#协程" id="协程">协程</a></h2>
 <p>Python 2 中基于生成器的协程：
 Python 3 中的原生协程：</p>
-<h2><a class="header" href="#21-单元测试" id="21-单元测试">21. 单元测试</a></h2>
+<h2><a class="header" href="#单元测试" id="单元测试">单元测试</a></h2>
 <p>Python中常用的单元测试相关库：<code>pytest</code>。</p>
-<h2><a class="header" href="#22-深拷贝与浅拷贝" id="22-深拷贝与浅拷贝">22. 深拷贝与浅拷贝</a></h2>
+<h2><a class="header" href="#深拷贝与浅拷贝" id="深拷贝与浅拷贝">深拷贝与浅拷贝</a></h2>
 <p>深拷贝：
 浅拷贝：
 实现深拷贝：</p>
-<h2><a class="header" href="#23-一行代码实现1-100之和" id="23-一行代码实现1-100之和">23. 一行代码实现1-100之和</a></h2>
+<h2><a class="header" href="#一行代码实现-1-100-之和" id="一行代码实现-1-100-之和">一行代码实现 1-100 之和</a></h2>
 <pre><code class="language-python">result = sum(range(1, 101))
 </code></pre>
-<h2><a class="header" href="#24-列举5个python标准库" id="24-列举5个python标准库">24. 列举5个Python标准库</a></h2>
+<h2><a class="header" href="#列举-5-个-python-标准库" id="列举-5-个-python-标准库">列举 5 个 Python 标准库</a></h2>
 <ul>
 <li><code>os</code>：封装了常见的文件和目录操作</li>
 <li><code>urllib</code>：网络请求模块，包括对url的结构解析</li>
@@ -291,13 +291,13 @@ Python 3 中的原生协程：</p>
 <li><code>re</code>：正则表达式模块</li>
 <li><code>itertools</code>：提供了操作生成器的一些模块</li>
 </ul>
-<h2><a class="header" href="#25-列表去重" id="25-列表去重">25. 列表去重</a></h2>
+<h2><a class="header" href="#列表去重" id="列表去重">列表去重</a></h2>
 <pre><code class="language-python">lis = [1, 2, 3, 4, 5, 4]
 list(set(lis))
 </code></pre>
-<h2><a class="header" href="#26-单引号双引号三引号的区别" id="26-单引号双引号三引号的区别">26. 单引号、双引号、三引号的区别</a></h2>
+<h2><a class="header" href="#单引号双引号三引号的区别" id="单引号双引号三引号的区别">单引号、双引号、三引号的区别</a></h2>
 <p>单引号和双引号无区别。三引号又分为三双引号和三单引号，这两者也无区别，三引号主要用于文档字符串，会保留格式信息。三引号也用于多行注释。</p>
-<h2><a class="header" href="#27-单下划线和双下划线区别" id="27-单下划线和双下划线区别">27. 单下划线和双下划线区别</a></h2>
+<h2><a class="header" href="#单下划线和双下划线区别" id="单下划线和双下划线区别">单下划线和双下划线区别</a></h2>
 
                     </main>
 
