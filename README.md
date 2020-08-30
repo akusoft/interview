@@ -29,3 +29,6 @@ mdbook serve
 
 你可以通过常规的 Git 工作流在本地补充完善此文档，
 也可以直接在 [线上](https://github.com/akusoft/interview) 补充完善。
+
+## 许可协议
+本文档采用 [CC BY 4.0](LiCENSE) 许可协议，转载请注明出处！
