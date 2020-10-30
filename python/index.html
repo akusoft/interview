@@ -298,6 +298,26 @@ list(set(lis))
 <h2><a class="header" href="#单引号双引号三引号的区别" id="单引号双引号三引号的区别">单引号、双引号、三引号的区别</a></h2>
 <p>单引号和双引号无区别。三引号又分为三双引号和三单引号，这两者也无区别，三引号主要用于文档字符串，会保留格式信息。三引号也用于多行注释。</p>
 <h2><a class="header" href="#单下划线和双下划线区别" id="单下划线和双下划线区别">单下划线和双下划线区别</a></h2>
+<h2><a class="header" href="#python-中运算符重载的实现" id="python-中运算符重载的实现">Python 中运算符重载的实现</a></h2>
+<p>通过重写相应的魔法方法实现，如下：</p>
+<ul>
+<li><code>__add__</code>：<code>+</code></li>
+<li><code>__sub__</code>：<code>-</code></li>
+<li><code>__lt__</code>：<code>&lt;</code></li>
+<li><code>__eq__</code>：<code>==</code></li>
+<li><code>__gt__</code>：<code>&gt;</code></li>
+</ul>
+<p>等。</p>
+<h2><a class="header" href="#python-中迭代器的实现" id="python-中迭代器的实现">Python 中迭代器的实现</a></h2>
+<p>实现以下 2 个魔法方法：</p>
+<ul>
+<li><code>__iter__()</code>：返回一个迭代器</li>
+<li><code>__next__()</code>：返回下一个迭代器</li>
+</ul>
+<h2><a class="header" href="#dockerfile-中-cmd-与-entrypoint-区别" id="dockerfile-中-cmd-与-entrypoint-区别">Dockerfile 中 <code>CMD</code> 与 <code>ENTRYPOINT</code> 区别</a></h2>
+<p>把可能需要变动的参数写到 <code>CMD</code> 里面。
+然后你可以在 <code>docker run</code> 里指定参数，
+这样 <code>CMD</code> 里的参数(这里是-c) 就会被覆盖掉而 <code>ENTRYPOINT</code> 里的不被覆盖。</p>
 
                     </main>
 
