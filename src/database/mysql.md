@@ -2,37 +2,41 @@
 
 MySQL 的默认端口为 `3306`，可通过修改 `/etc/my.cnf` 文件更改端口。
 
-MySQL 在 5.1 版本之后，其默认存储引擎为 `InnoDB`，在此之前其默认存储引擎为 `MyISAM`。
+MySQL 在 5.1 版本之后，其默认存储引擎为 `InnoDB`，在此之前其默认存储引擎为 `MyISAM`。InnoDB 支持事务，不支持全局索引；MyISAM 不支持事务，支持全局索引。
 
-## MySQL的事务
+## MySQL 的事务
 
-事务（Transaction）是数据库并发控制的基本单位，事务可以看作是一系列SQL语句的集合，事务必须要么全部执行成功，要么全部执行失败（回滚）。
+事务（Transaction）是数据库并发控制的基本单位，事务可以看作是一系列 SQL 语句的集合，事务必须要么全部执行成功，要么全部执行失败（回滚）。
 
-事务的四个基本特性（ACID）：
+事务的四个基本特性（**ACID**）：
 
-- 原子性（Atomicity）：一个事务中所有操作全部完成或失败
-- 一致性（Consistency）：事务开始和结束之后数据完整性没有被破坏
-- 隔离性（Isolation）：允许多个事务同时对数据库修改和读写
-- 持久性（Durability）：事务结束之后，修改是永久的不会丢失
+- **原子性**（Atomicity）：一个事务中所有操作全部完成或失败
+- **一致性**（Consistency）：事务开始和结束之后数据完整性没有被破坏
+- **隔离性**（Isolation）：允许多个事务同时对数据库修改和读写
+- **持久性**（Durability）：事务结束之后，修改是永久的不会丢失
 
-## MySQL的常用数据类型
+## MySQL 的常用数据类型
 
-- 文本类
-  - CHAR
-  - VARCHAR
-  - TEXT
-  - LONGTEXT
 - 数值类
-  - TINYINT
-  - INT
-  - BIGINT
-  - FLOAT
-  - DOUBLE
+  - `TINYINT`
+  - `INT`
+  - `BIGINT`
+  - `FLOAT`
+  - `DOUBLE`
+  - `DECIMAL`：精确的小数
+- 文本类
+  - `CHAR`：定长字符串
+  - `VARCHAR`：变长字符串
+  - `TEXT`
+  - `LONGTEXT`
 - 日期类
-  - DATETIME
-  - TIMESTAMP
+  - `DATETIME`
+  - `TIMESTAMP`
+- 其他类型
+  - `ENUM`
+  - `SET`
 
-## MySQL的索引
+## MySQL 的索引
 
 索引是**数据表**中一个或者多个列进行排序的数据结构，索引能够大幅提升检索速度，创建、更新索引本身也会耗费空间和时间。
 
@@ -44,9 +48,9 @@ MySQL 在 5.1 版本之后，其默认存储引擎为 `InnoDB`，在此之前其
 - 主键索引，一个表只能有一个
 - 全文索引，InnoDB不支持
 
-## MySQL语法
+## MySQL 语法
 
-添加和删除数据库：
+*数据库* 相关操作：
 
 ```SQL
 # 显示当前已存在数据库
@@ -62,10 +66,10 @@ drop database gc;
 use gc;
 ```
 
-添加和删除数据表：
+*数据表* 相关操作：
 
 ```SQL
-# 显示当前已存在数据表
+# 显示当前数据库中已存在数据表
 show tables;
 
 # 创建数据表account
@@ -80,21 +84,13 @@ describe account;
 
 # 删除数据表account
 drop table account;
-```
 
-添加和删除列：
-
-```SQL
-向数据表account中添加整形且不为空默认为1的c1列
+# 向数据表account中添加整形且不为空默认为1的c1列
 alter table account add c1 int(11) not null default 1;
 
 # 删除数据表account中的c1列
 alter table account drop c1;
-```
 
-修改列或数据表：
-
-```SQL
 # 修改数据表account中city列为newcity列，且类型为varchar
 alter table account change city newcity varchar(255);
 
@@ -102,7 +98,7 @@ alter table account change city newcity varchar(255);
 alter table account rename newaccount;
 ```
 
-查看或插入表数据：
+*行* 的 *增加*：
 
 ```SQL
 # 向数据表book中插入一行数据，其中id列为3，title列为't'，content列为'c'
@@ -113,7 +109,32 @@ insert into book(content) values ('c');
 
 # 将数据表book1中id列不为1的所有数据插入到数据表book2中
 insert into book2 select * from book1 where id != 1;
+```
 
+*行* 的 *删除*：
+
+```SQL
+# 清空数据表book中的所有行
+delete from book;
+truncate table book;
+
+# 删除数据表book中id小于6的所有行
+delete from book where id<6;
+```
+
+*行* 的 *修改*：
+
+```SQL
+# 修改数据表book中的content列为'day'
+update book set content = 'day'
+
+# 修改数据表book中id列为3的数据的content列为'day'
+update book set content = 'day' where id = 3;
+```
+
+*行* 的 *查看*：
+
+```SQL
 # 从数据表book中查看所有列的数据
 select * from book;
 
@@ -148,9 +169,6 @@ select * from book where title like '%color%';
 select * from book where title not like '%color%';
 ```
 
-更新表数据：
+## MySQL 优化
 
-```SQL
-# 修改数据表book中id列为3的数据的content列为'day'
-update book set content = 'day' where id = 3;
-```
+创建数据表时，将定长的数据类型（如 `CHAR`）的列放在前面，将变长的数据类型（如 `VARCHAR`）的列放在后面。

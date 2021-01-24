@@ -132,6 +132,29 @@ Python 3 新增：
 
 ## Python 的装饰器（decorator）
 
+```python
+import functools
+
+
+def outer(func):
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        print('before')
+        result = func(*args, **kwargs)
+        print('after')
+        return result
+    return inner
+
+
+@outer  # func = outer(func)
+def func():
+    print('func')
+
+
+func()
+print(func.__name__)
+```
+
 ## 协程
 
 Python 2 中基于生成器的协程：
