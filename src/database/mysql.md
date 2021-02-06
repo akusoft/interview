@@ -141,17 +141,11 @@ select * from book;
 # 从数据表book中查看title和content列的数据
 select title,content from book;
 
-# 从数据表book中查看id列不为空的所有列的数据
-select * from book where id is null;
-
 # 从数据表book中查看title列的数据（去重）
 select distinct title from book;
 
-# 从数据表book中查看pages列大于0的数据，结果先按content列降序排列，再按pages列升序排列
-select * from book where pages > 0 order by content desc,pages asc;
-
-# 从数据表book中查看所有列的数据，结果按照id列升序排列，并从下标为2的行数据开始，取2行
-select * from book order by id limit 2,2;
+# 从数据表book中查看id列不为空的所有列的数据
+select * from book where id is null;
 
 # 从数据表book中查看title列的数据等于'sun'或'color'的所有列的数据
 select * from book where title in ('sun', 'color')；
@@ -167,6 +161,31 @@ select * from book where title like '%color%';
 
 # 从数据表book中查看title列的数据不包含'color'的所有列的数据
 select * from book where title not like '%color%';
+
+# 从数据表book中查看所有列的数据，结果按照id列升序排列，并从下标为2的行数据开始，取2行
+select * from book order by id limit 2,2;
+
+# 从数据表book中查看pages列大于0的数据，结果先按content列降序排列，再按pages列升序排列
+select * from book where pages > 0 order by content desc,pages asc;
+
+
+# 分组
+# 统计userinfo表中part_id相同的条目数量
+select count(id),part_id from userinfo group by part_id;
+
+# 统计userinfo表中part_id条目数量大于1的条目
+select part_id from userinfo group by part_id having count(id) > 1;
+
+
+# 连表操作
+# 将userinfo表和department表连接起来显示，左连接，左边（userinfo）全部显示
+select userinfo.id,department.id from userinfo left join department on userinfo.part_id = department.id;
+
+# 右连接，右边（department）全部显示，可用左连接代替
+select userinfo.id,department.id from userinfo right join department on userinfo.part_id = department.id;
+
+# 效果和上述一样，区别在于将出现null的行隐藏
+select userinfo.id,department.id from userinfo inner join department on userinfo.part_id = department.id;
 ```
 
 ## MySQL 优化
