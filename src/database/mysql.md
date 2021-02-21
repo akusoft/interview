@@ -48,6 +48,14 @@ MySQL 在 5.1 版本之后，其默认存储引擎为 `InnoDB`，在此之前其
 - 主键索引，一个表只能有一个
 - 全文索引，InnoDB不支持
 
+## 分库分表
+
+## 分页
+
+## MySQL 为什么使用 B+ 树来作索引
+
+参考：[为什么 MySQL 使用 B+ 树](https://draveness.me/whys-the-design-mysql-b-plus-tree/)
+
 ## MySQL 语法
 
 *数据库* 相关操作：
@@ -191,3 +199,7 @@ select userinfo.id,department.id from userinfo inner join department on userinfo
 ## MySQL 优化
 
 创建数据表时，将定长的数据类型（如 `CHAR`）的列放在前面，将变长的数据类型（如 `VARCHAR`）的列放在后面。
+
+## 为什么 InnoDB 使用 B+ 树
+
+参考：[为什么 MySQL 使用 B+ 树](https://draveness.me/whys-the-design-mysql-b-plus-tree/)
