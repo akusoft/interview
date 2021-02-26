@@ -1,33 +1,129 @@
 # Python
 
-## Python 的值类型和引用类型
+## 值类型和引用类型
 
 - 值类型：对象本身不允许修改
 - 引用类型：对象本身可以修改
 
-## Python 的数据类型
+## 可变类型和不可变类型
 
 - 不可变（值类型）：Number、String、Tuple
 - 可变（引用类型）：List、Dictionary、Set
 
-## `list` 作为参数会被改掉
+## 深拷贝与浅拷贝
+
+深拷贝：
+浅拷贝：
+实现深拷贝：
+
+## 装饰器（decorator）
 
 ```python
-lis = [1, 2, 3]
+import functools
 
 
-def foo(v):
-    v[1] = 4
-    return v
+def outer(func):
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        print('before')
+        result = func(*args, **kwargs)
+        print('after')
+        return result
+    return inner
 
 
-print(foo(lis))
-print(lis)
+@outer  # func = outer(func)
+def func():
+    print('func')
 
-Output:
-[1, 4, 3]
-[1, 4, 3]
+
+func()
+print(func.__name__)
 ```
+
+## 生成器
+
+生成器就是可以生成值的函数，当一个函数里有了 `yield` 关键字就成了生成器，生成器可以挂起执行并且保持当前执行的状态。
+
+## 迭代器
+
+实现以下 2 个魔法方法：
+
+- `__iter__()`：返回一个迭代器
+- `__next__()`：返回下一个迭代器
+
+## `sort` 与 `sorted`
+
+`sorted` 函数生成一个新的已排序的序列，`sort` 方法在原序列上进行排序。它们的底层实现都是 Timsort，这是一种归并排序和插入排序的混合体。
+
+## `zip`
+
+`zip()` 函数用于将可迭代对象作为参数，将对象中对应的元素**打包**成一个个元组，然后返回由这些元组组成的列表。
+
+如下：
+
+```python
+a = [1, 2, 3, 4]
+b = [5, 6, 7]
+
+list(zip(a, b))  # [(1, 5), (2, 6), (3, 7)]
+```
+
+## `map`、`filter`、`reduce`
+
+`map`、`filter`、`reduce` 同属于高阶函数，接受函数为参数，或者把函数作为结果返回的函数是**高阶函数**（higher-order function）。
+
+- `map()`：`map()` 函数返回一个可迭代对象，里面的元素是把第一个参数（一个函数）应用到第二个参数（一个可迭代对象）中各个元素上得到的结果
+- `filter()`
+- `reduce()`
+
+如下：
+
+```python
+from functools import reduce
+from operator import add
+
+reduce(add, range(1, 4))  # 6
+
+
+list(map(str, range(5)))  # ['0', '1', '2', '3', '4']
+
+
+def is_odd(n):
+    return n % 2 == 1
+
+
+list(filter(is_odd, range(1, 11)))  # [1, 3, 5, 7, 9]
+```
+
+## `all`、`any`
+
+`all`、`any` 同属归约函数，**归约函数**是把某个操作连续应用到序列的元素上，累计之前的结果，把一系列值**归约**成一个值。
+
+- `all(iterable)`：如果 `iterable` 的每个元素都是真值，返回 `True`；`all([])` 返回 `True`。
+- `any(iterable)`：只要 `iterable` 中有元素是真值，就返回 `True`；`any([])` 返回 `False`。
+
+如下：
+
+```python
+lis1 = [True, True, True]
+lis2 = [True, True, False]
+lis3 = [False, False, False]
+
+all(lis1)  # True
+all(lis2)  # False
+all(lis3)  # False
+
+any(lis1)  # True
+any(lis2)  # True
+any(lis3)  # False
+```
+
+## 读写文件
+
+## 类方法、静态方法、实例方法
+
+## `is` 与 `==` 的区别
 
 ## Node 和 Tornado 快是因为：事件驱动和异步非阻塞
 
@@ -36,20 +132,6 @@ Output:
 ## Python 中数组与链表的区别
 
 数组中存储的数据类型必须相同，且数组一经确定，大小即固定不变；而列表中的元素类型可不同，列表的大小也不固定。
-
-## Python 实现斐波那契数列
-
-```python
-def fib(n):
-    if n <= 1:
-        return n
-    else:
-        return fib(n - 1) + fib(n - 2)
-
-
-for i in range(10):
-    print(fib(i))
-```
 
 ## Python 是动态强类型语言
 
@@ -65,18 +147,10 @@ for i in range(10):
 
 ## 自省（Introspection）是指运行时判断一个对象的类型的能力
 
-## `is` 与 `=` 的区别
-
 ## 列表和字典推导
 
 ```python
 [i for i in range(10) if i % 2 == 0]
-```
-
-## Python 之禅
-
-```python
-import this
 ```
 
 ## Python 2 与 Python 3 的差异
@@ -126,55 +200,10 @@ Python 3 新增：
 
 所有异常都继承自 `BaseException` 类，要定义自己的异常需要继承自 `Exception` 类。
 
-## Python 的生成器
-
-生成器就是可以生成值的函数，当一个函数里有了 `yield` 关键字就成了生成器，生成器可以挂起执行并且保持当前执行的状态。
-
-## Python 的装饰器（decorator）
-
-```python
-import functools
-
-
-def outer(func):
-    @functools.wraps(func)
-    def inner(*args, **kwargs):
-        print('before')
-        result = func(*args, **kwargs)
-        print('after')
-        return result
-    return inner
-
-
-@outer  # func = outer(func)
-def func():
-    print('func')
-
-
-func()
-print(func.__name__)
-```
-
 ## 协程
 
 Python 2 中基于生成器的协程：
 Python 3 中的原生协程：
-
-## 单元测试
-
-Python中常用的单元测试相关库：`pytest`。
-
-## 深拷贝与浅拷贝
-
-深拷贝：
-浅拷贝：
-实现深拷贝：
-
-## 一行代码实现 1-100 之和
-
-```python
-result = sum(range(1, 101))
-```
 
 ## 列举 5 个 Python 标准库
 
@@ -183,13 +212,6 @@ result = sum(range(1, 101))
 - `asyncio`：Python的异步库，基于事件循环的协程模块
 - `re`：正则表达式模块
 - `itertools`：提供了操作生成器的一些模块
-
-## 列表去重
-
-```python
-lis = [1, 2, 3, 4, 5, 4]
-list(set(lis))
-```
 
 ## 单引号、双引号、三引号的区别
 
@@ -209,15 +231,48 @@ list(set(lis))
 
 等。
 
-## Python 中迭代器的实现
+## Python 实现斐波那契数列
 
-实现以下 2 个魔法方法：
+```python
+def fib(n):
+    if n <= 1:
+        return n
+    else:
+        return fib(n - 1) + fib(n - 2)
 
-- `__iter__()`：返回一个迭代器
-- `__next__()`：返回下一个迭代器
 
-## Dockerfile 中 `CMD` 与 `ENTRYPOINT` 区别
+for i in range(10):
+    print(fib(i))
+```
 
-把可能需要变动的参数写到 `CMD` 里面。
-然后你可以在 `docker run` 里指定参数，
-这样 `CMD` 里的参数(这里是-c) 就会被覆盖掉而 `ENTRYPOINT` 里的不被覆盖。
+## 一行代码实现 1-100 之和
+
+```python
+result = sum(range(1, 101))
+```
+
+## 列表去重
+
+```python
+lis = [1, 2, 3, 4, 5, 4]
+list(set(lis))
+```
+
+## `list` 作为参数会被改掉
+
+```python
+lis = [1, 2, 3]
+
+
+def foo(v):
+    v[1] = 4
+    return v
+
+
+print(foo(lis))
+print(lis)
+
+Output:
+[1, 4, 3]
+[1, 4, 3]
+```
