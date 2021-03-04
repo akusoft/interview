@@ -672,17 +672,17 @@ zincrby zseta 1 mov1
 <strong>创建型模式</strong>、<strong>结构型模式</strong>、<strong>行为型模式</strong>。</p>
 <h2><a class="header" href="#创建型模式" id="创建型模式">创建型模式</a></h2>
 <ul>
+<li>单例（或称单件，Singleton）</li>
+<li>原型</li>
 <li>工厂方法</li>
 <li>抽象工厂</li>
 <li>建造者</li>
-<li>原型</li>
-<li>单例模式</li>
 </ul>
 <h2><a class="header" href="#结构型模式" id="结构型模式">结构型模式</a></h2>
 <ul>
 <li>适配器</li>
 <li>桥接</li>
-<li>组合模式</li>
+<li>组合</li>
 <li>装饰器</li>
 <li>外观</li>
 <li>享元</li>
@@ -690,18 +690,39 @@ zincrby zseta 1 mov1
 </ul>
 <h2><a class="header" href="#行为型模式" id="行为型模式">行为型模式</a></h2>
 <ul>
-<li>责任链</li>
+<li>备忘录</li>
+<li>策略</li>
+<li>访问者</li>
 <li>命令</li>
+<li>模板方法</li>
+<li>责任链</li>
 <li>解释器</li>
 <li>迭代器</li>
-<li>中介</li>
-<li>备忘录</li>
+<li>中介者</li>
 <li>观察者</li>
 <li>状态</li>
-<li>策略模式</li>
-<li>模板方法</li>
-<li>访问者</li>
 </ul>
+<h2><a class="header" href="#单例模式" id="单例模式">单例模式</a></h2>
+<p><strong>单例模式</strong>确保一个类只有一个实例，并提供一个全局访问点。</p>
+<pre><code class="language-java">public class Singleton {
+    private static Singleton uniqueInstance;
+    private Singleton() {}
+    public static synchronized Singleton getInstance() {
+        if (uniqueInstance == numm) {
+            uniqueInstance = new Singleton();
+        }
+        return uniqueInstance;
+    }
+}
+
+Singleton.getInstance();
+</code></pre>
+<h2><a class="header" href="#策略模式" id="策略模式">策略模式</a></h2>
+<p><strong>策略模式</strong>定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<pre><code class="language-java"></code></pre>
+<h2><a class="header" href="#工厂模式" id="工厂模式">工厂模式</a></h2>
+<p><strong>工厂模式</strong>又分为<strong>抽象工厂模式</strong>和<strong>工厂方法模式</strong>，抽象工厂模式提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类；工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类。</p>
+<pre><code class="language-java"></code></pre>
 <h1><a class="header" href="#系统设计" id="系统设计">系统设计</a></h1>
 <h1><a class="header" href="#面向对象" id="面向对象">面向对象</a></h1>
 <p>由于 Java 是一门纯的面向对象的编程语言，所以此节的所有示例均采用 Java 书写。</p>
@@ -778,7 +799,32 @@ zincrby zseta 1 mov1
 <h1><a class="header" href="#安全" id="安全">安全</a></h1>
 <p>此节主要记录与安全相关的知识点。</p>
 <h2><a class="header" href="#xss" id="xss">XSS</a></h2>
+<p><strong>XSS</strong>（cross-site scripting）即跨站脚本攻击，通过 Web 站点漏洞，向客户端交付恶意脚本代码，实现对客户端的攻击目的。</p>
+<p>攻击的方向有盗取 cookie（<code>document.cookie</code>）、重定向（<code>window.location</code>）等。</p>
+<p>测试 XSS：</p>
+<pre><code class="language-html">&lt;script&gt;alert('XSS');&lt;/script&gt;
+</code></pre>
+<p>XSS 漏洞形成的根源是服务器对用户提交数据过滤不严且对输出信息未做过滤。</p>
+<p>XSS 具体可分为：</p>
+<ul>
+<li><strong>反射型 XSS</strong>（非持久）：恶意脚本上传到服务器上，并原封不动返回，服务器不存储</li>
+<li><strong>存储型 XSS</strong>（持久）：恶意脚本上传且存储到服务器上。常见于留言板等。</li>
+<li><strong>DOM 型</strong>：恶意脚本不上传到服务器</li>
+</ul>
+<p>要预防 XSS 可以对输出信息做 HTML 编码，这会对某些特殊字符（如 <code>&lt;</code>、<code>&gt;</code>、<code>(</code>、<code>)</code>、<code>'</code>、<code>&quot;</code>、<code>/</code>、<code>\</code>、<code>=</code>）做编码。</p>
 <h2><a class="header" href="#csrf" id="csrf">CSRF</a></h2>
+<p><strong>CSRF</strong>（Cross-site request forgery）即<strong>跨站请求伪造</strong>，在用户非自愿、不知情的情况下提交请求。比如，修改账号密码、个人信息（email、收获地址），发送伪造的业务请求（网银、购物、投票），关注他人社交账号、推送博文等。</p>
+<p>从信任的角度来区分：</p>
+<ul>
+<li>XSS：利用用户对站点的信任</li>
+<li>CSRF：利用站点对已经身份认证的信任</li>
+</ul>
+<p>要预防 CSRF 可以通过以下几点：</p>
+<ul>
+<li>对关键操作进行二次确认机制，比如修改密码时需要二次确认或验证码等</li>
+<li>为表单添加隐藏的随机数（anti-CSRF token）</li>
+<li>Referrer 头</li>
+</ul>
 <h1><a class="header" href="#linux" id="linux">Linux</a></h1>
 <h2><a class="header" href="#linux-文件权限" id="linux-文件权限">Linux 文件权限</a></h2>
 <p>分为 3 种：</p>

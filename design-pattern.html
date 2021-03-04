@@ -158,17 +158,17 @@
 <strong>创建型模式</strong>、<strong>结构型模式</strong>、<strong>行为型模式</strong>。</p>
 <h2><a class="header" href="#创建型模式" id="创建型模式">创建型模式</a></h2>
 <ul>
+<li>单例（或称单件，Singleton）</li>
+<li>原型</li>
 <li>工厂方法</li>
 <li>抽象工厂</li>
 <li>建造者</li>
-<li>原型</li>
-<li>单例模式</li>
 </ul>
 <h2><a class="header" href="#结构型模式" id="结构型模式">结构型模式</a></h2>
 <ul>
 <li>适配器</li>
 <li>桥接</li>
-<li>组合模式</li>
+<li>组合</li>
 <li>装饰器</li>
 <li>外观</li>
 <li>享元</li>
@@ -176,18 +176,39 @@
 </ul>
 <h2><a class="header" href="#行为型模式" id="行为型模式">行为型模式</a></h2>
 <ul>
-<li>责任链</li>
+<li>备忘录</li>
+<li>策略</li>
+<li>访问者</li>
 <li>命令</li>
+<li>模板方法</li>
+<li>责任链</li>
 <li>解释器</li>
 <li>迭代器</li>
-<li>中介</li>
-<li>备忘录</li>
+<li>中介者</li>
 <li>观察者</li>
 <li>状态</li>
-<li>策略模式</li>
-<li>模板方法</li>
-<li>访问者</li>
 </ul>
+<h2><a class="header" href="#单例模式" id="单例模式">单例模式</a></h2>
+<p><strong>单例模式</strong>确保一个类只有一个实例，并提供一个全局访问点。</p>
+<pre><code class="language-java">public class Singleton {
+    private static Singleton uniqueInstance;
+    private Singleton() {}
+    public static synchronized Singleton getInstance() {
+        if (uniqueInstance == numm) {
+            uniqueInstance = new Singleton();
+        }
+        return uniqueInstance;
+    }
+}
+
+Singleton.getInstance();
+</code></pre>
+<h2><a class="header" href="#策略模式" id="策略模式">策略模式</a></h2>
+<p><strong>策略模式</strong>定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<pre><code class="language-java"></code></pre>
+<h2><a class="header" href="#工厂模式" id="工厂模式">工厂模式</a></h2>
+<p><strong>工厂模式</strong>又分为<strong>抽象工厂模式</strong>和<strong>工厂方法模式</strong>，抽象工厂模式提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类；工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类。</p>
+<pre><code class="language-java"></code></pre>
 
                     </main>
 
