@@ -169,7 +169,12 @@
 <li>geo</li>
 <li>Stream</li>
 </ul>
-<h2><a class="header" href="#缓存击穿缓存穿透缓存雪崩" id="缓存击穿缓存穿透缓存雪崩">缓存击穿、缓存穿透、缓存雪崩</a></h2>
+<h2><a class="header" href="#缓存穿透缓存击穿缓存雪崩" id="缓存穿透缓存击穿缓存雪崩">缓存穿透、缓存击穿、缓存雪崩</a></h2>
+<ul>
+<li>缓存穿透：不断访问不在缓存和数据库中的数据，可对用户输入做过滤。</li>
+<li>缓存击穿：热点数据在失效的瞬间击穿缓存，可设置热点数据永不过期。</li>
+<li>缓存雪崩：同一时间大量 key 过期，可将 key 的过期时间设为随机。</li>
+</ul>
 <h2><a class="header" href="#redis-持久化" id="redis-持久化">Redis 持久化</a></h2>
 <h2><a class="header" href="#redis-分布式锁" id="redis-分布式锁">Redis 分布式锁</a></h2>
 <h2><a class="header" href="#redis-常用命令" id="redis-常用命令">Redis 常用命令</a></h2>

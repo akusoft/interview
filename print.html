@@ -277,6 +277,17 @@ IP 的服务模型是<strong>尽力而为交付服务</strong>（best-effort del
 <p>TCP 套接字和 UDP 套接字之间的一个细微差别是，TCP 套接字是由一个四元组（源 IP 地址，源端口号、目的 IP 地址、目的端口号）来标识的。</p>
 <p>事实上，当今的高性能 Web 服务器通常只使用一个进程，但是为每个新的客户连接创建一个具有新连接套接字的新线程。</p>
 <p>运输层最低限度必须提供一种复用/分解服务，以便在网络层与正确的应用级进程之间传递数据。</p>
+<h2><a class="header" href="#从输入-url-到展现页面的全过程" id="从输入-url-到展现页面的全过程">从输入 URL 到展现页面的全过程</a></h2>
+<ol>
+<li>客户的操作系统生成一个 <strong>DHCP 请求报文</strong>，并将这个报文放入具有目的端口 67（DHCP 服务器）和源端口 68（DHCP 客户）的 <strong>UDP 报文段</strong>，该 UDP 报文段则被放置在一个具有广播 IP 目的地址（255.255.255.255）和源 IP 地址 0.0.0.0 的 <strong>IP 数据报</strong>中，因为此时客户还没有一个 IP 地址。</li>
+<li>包含 DHCP 请求报文的 IP 数据报则被放置在<strong>以太网帧</strong>中。该以太网帧具有目的 MAC 地址 FF:FF:FF:FF:FF:FF，使该帧将广播到与交换机连接的所有设备（如果顺利的话也包括 DHCP 服务器）；该帧的源 MAC 地址是客户的 MAC 地址（如：00:16:D3:23:68:8A）。</li>
+<li>包含 DHCP 请求的广播以太网帧是第一个由客户发送到以太网交换机的帧。该交换机在所有的出端口广播入帧，包括连接到路由器的端口。</li>
+<li>路由器在它的具有 MAC 地址 00:22:6B:45:1F 的接口接收到该广播以太网帧，该帧中包含 DHCP 请求，并且从该以太网帧中抽取出 IP 数据报。该数据报的广播 IP 目的地址指示了这个 IP 数据报应当由在该节点的高层协议处理，因此该数据报的载荷（一个 UDP 报文段）<strong>被分解</strong>向上到达 UDP，DHCP 请求报文从此 UDP 报文段中抽取出来。此时 DHCP 服务器有了 DHCP 请求报文。</li>
+<li>DHCP 服务器生成 IP 地址以及 DNS 服务器的 IP 地址、默认网关路由器的 IP 地址和子网块（等价为“网络掩码”）的一个 <strong>DHCP ACK 报文</strong>。该 DHCP 报文被放入一个 UDP 报文段中，UDP 报文段被放入一个 IP 数据报中，IP 数据报再被放入一个以太网帧中。这个以太网帧的源 MAC 地址是路由器连到归属网络时接口的 MAC 地址（00:22:6B:45:1F:1B），目的 MAC 地址是客户的 MAC 地址（00:16:D3:23:68:8A）。</li>
+<li>包含 DHCP ACK 的以太网帧由路由器发送给交换机。因为交换机是<strong>自学习</strong>的，并且先前从客户收到（包含 DHCP 请求）以太网帧，所以该交换机知道寻址到 00:16:D3:23:68:8A 的帧仅从通向客户的输出端口转发。</li>
+<li>客户接收到包含 DHCP ACK 的以太网帧，从该以太网帧中抽取 IP 数据报，从 IP 数据报中抽取 UDP 报文段，从 UDP 报文段抽取 DHCP ACK 报文。客户的 DHCP 客户则记录下它的 IP 地址和它的 DNS 服务器的 IP 地址。它还在其 <strong>IP 转发表</strong>中安装默认网关的地址。客户将向该默认网关发送目的地址为其子网以外的所有数据报。此时，客户已经初始化好它的网络组件，并准备开始处理 Web 网页获取。</li>
+<li>客户的操作系统因此生成一个 <strong>DNS 查询报文</strong>，将字符串 www.google.com 放入 DNS 报文的问题段中。该 DNS 报文则放置在一个具有 53 号（DNS 服务器）目的端口的 UDP 报文段中。该 UDP 报文段则被放入 IP 数据报中。</li>
+</ol>
 <h1><a class="header" href="#socket-编程" id="socket-编程">socket 编程</a></h1>
 <h2><a class="header" href="#tcp" id="tcp">TCP</a></h2>
 <p>服务端：</p>
@@ -593,7 +604,12 @@ select userinfo.id,department.id from userinfo inner join department on userinfo
 <li>geo</li>
 <li>Stream</li>
 </ul>
-<h2><a class="header" href="#缓存击穿缓存穿透缓存雪崩" id="缓存击穿缓存穿透缓存雪崩">缓存击穿、缓存穿透、缓存雪崩</a></h2>
+<h2><a class="header" href="#缓存穿透缓存击穿缓存雪崩" id="缓存穿透缓存击穿缓存雪崩">缓存穿透、缓存击穿、缓存雪崩</a></h2>
+<ul>
+<li>缓存穿透：不断访问不在缓存和数据库中的数据，可对用户输入做过滤。</li>
+<li>缓存击穿：热点数据在失效的瞬间击穿缓存，可设置热点数据永不过期。</li>
+<li>缓存雪崩：同一时间大量 key 过期，可将 key 的过期时间设为随机。</li>
+</ul>
 <h2><a class="header" href="#redis-持久化" id="redis-持久化">Redis 持久化</a></h2>
 <h2><a class="header" href="#redis-分布式锁" id="redis-分布式锁">Redis 分布式锁</a></h2>
 <h2><a class="header" href="#redis-常用命令" id="redis-常用命令">Redis 常用命令</a></h2>
@@ -917,16 +933,113 @@ def func():
 func()
 print(func.__name__)
 </code></pre>
-<h2><a class="header" href="#生成器" id="生成器">生成器</a></h2>
-<p>生成器就是可以生成值的函数，当一个函数里有了 <code>yield</code> 关键字就成了生成器，生成器可以挂起执行并且保持当前执行的状态。</p>
-<h2><a class="header" href="#迭代器" id="迭代器">迭代器</a></h2>
-<p>实现以下 2 个魔法方法：</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/howiezhao/python-notebook/blob/master/notebook/04-closure-decorator.ipynb">闭包和装饰器</a></li>
+</ol>
+<h2><a class="header" href="#迭代器iterator与可迭代对象iterable" id="迭代器iterator与可迭代对象iterable">迭代器（iterator）与可迭代对象（iterable）</a></h2>
+<p><strong>迭代器类</strong>实现了以下 2 个魔法方法：</p>
 <ul>
-<li><code>__iter__()</code>：返回一个迭代器</li>
-<li><code>__next__()</code>：返回下一个迭代器</li>
+<li><code>__iter__()</code>：返回对象本身，即 <code>self</code></li>
+<li><code>__next__()</code>：返回下一个数据，若没有数据了，则抛出 <code>StopIteration</code> 异常</li>
 </ul>
+<p>根据迭代器类可以实例化一个<strong>迭代器对象</strong>。</p>
+<p>迭代器对象支持通过 <code>next</code> 取值，若取值结束则自动抛出 <code>StopIteration</code>。</p>
+<p><code>for</code> 循环内部在循环时，先执行 <code>__iter__</code> 方法，获取一个迭代器对象，然后不断的执行 <code>next</code> 取值，有异常 <code>StopIteration</code> 则终止循环。</p>
+<p>如下：</p>
+<pre><code class="language-python"># 创建迭代器类
+class IT(object):
+    def __init__(self):
+        self.counter = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.counter += 1
+        if self.counter == 3:
+            raise StopIteration()
+        return self.counter
+
+
+# 根据迭代器类实例化一个迭代器对象
+obj1 = IT()
+# 使用迭代器对象
+obj1.__next__()  # 1
+obj1.__next__()  # 2
+obj1.__next__()  # 抛出异常
+
+# 另一种使用迭代器对象的方法
+obj2 = IT()
+next(obj2)  # 等同于 obj2.__next__()，输出 1
+next(obj2)  # 2
+next(obj2)  # 抛出异常
+
+# 迭代器对象可以使用 for 语句
+obj3 = IT()
+for item in obj3:
+    print(item)  # 1 2
+</code></pre>
+<p>如果一个类中有 <code>__iter__</code> 方法且返回一个迭代器对象（或生成器对象），则我们称以这个类创建的对象为<strong>可迭代对象</strong>。</p>
+<p>列表、字典、元组等都是可迭代对象。</p>
+<p>可迭代对象是可以使用 <code>for</code> 来进行循环，在循环的内部其实是先执行 <code>__iter__</code> 方法，获取其迭代器对象，然后再在内部执行这个迭代器对象的 <code>next</code> 功能，逐步取值。</p>
+<p>如下：</p>
+<pre><code class="language-python">class Foo(object):
+    def __iter__(self):
+        return IT()
+
+
+# 创建可迭代对象
+obj = Foo()
+
+for item in obj:
+    print(item)  # 1 2
+</code></pre>
+<p>总结，迭代器对象内部有 <code>__iter__</code>、<code>__next__</code> 方法，而可迭代对象内部只有 <code>__iter__</code> 方法。如下：</p>
+<pre><code class="language-python">v1 = range(10)  # v1 是可迭代对象，可通过 dir() 查看
+v2 = v1.__iter__()  # v2 是迭代器对象
+v2.__next__()  # 0
+</code></pre>
+<h2><a class="header" href="#生成器" id="生成器">生成器</a></h2>
+<p>当一个函数里有了 <code>yield</code> 关键字就成了<strong>生成器函数</strong>，调用生成器函数就可以得到一个<strong>生成器对象</strong>。</p>
+<p>得到生成器对象时，内部是根据生成器类 generator 创建的对象，生成器类的内部也声明了 <code>__iter__</code>、<code>__next__</code> 方法</p>
+<p>如果按照迭代器的规定来看，其实生成器类也是一种特殊的迭代器类，即<strong>生成器也是一种特殊的迭代器</strong>。</p>
+<p>如下：</p>
+<pre><code class="language-python"># 创建生成器函数
+def func():
+    yield 1
+    yield 2
+
+
+# 创建生成器对象
+obj1 = func()
+
+next(obj1)  # 1
+next(obj1)  # 2
+next(obj1)  # 抛出异常
+
+obj2 = func
+for item in obj2:
+    print(item)  # 1 2
+</code></pre>
+<p>生成器就是可以生成值的函数，</p>
+<p>生成器可以挂起执行并且保持当前执行的状态。</p>
 <h2><a class="header" href="#sort-与-sorted" id="sort-与-sorted"><code>sort</code> 与 <code>sorted</code></a></h2>
-<p><code>sorted</code> 函数生成一个新的已排序的序列，<code>sort</code> 方法在原序列上进行排序。它们的底层实现都是 Timsort，这是一种归并排序和插入排序的混合体。</p>
+<p><code>sorted</code> 函数生成一个新的已排序的序列，<code>sort</code> 方法在原序列上进行排序。如下：</p>
+<pre><code class="language-python">a = [2, 6, 3, 1, 2]
+print(sorted(a))  # [1, 2, 2, 3, 6]
+print(a)  # [2, 6, 3, 1, 2]
+print(a.sort())  # None
+print(a)  # [1, 2, 2, 3, 6]
+</code></pre>
+<p>不管是 <code>sorted</code> 函数还是 <code>sort</code> 方法，都有两个可选的关键字参数：</p>
+<ul>
+<li><code>reverse</code>：<code>True</code> 则降序，默认为 <code>False</code>（即顺序）</li>
+<li><code>key</code>：单参数函数，用于排序算法</li>
+</ul>
+<p>它们背后的排序算法是 <a href="https://zh.wikipedia.org/wiki/Timsort">Timsort</a>，这是一种自适应算法、会根据原始数据的顺序特点交替使用插入排序和归并排序，以达到最佳效率。这样的算法被证明是很有效的，因为来自真实世界的数据通常是有一定的顺序特点的。</p>
+<p>由于插入排序和归并排序是稳定的，所以 Timsort 也是稳定的排序算法，即就算两个元素比不出大小，在每次排序的结果里它们的相对位置是固定的。</p>
+<p>Timsort 的创始人是 Tim Peters，他是 Python 核心开发者，也是 “Python 之禅”（<code>import this</code>）的作者。</p>
 <h2><a class="header" href="#zip" id="zip"><code>zip</code></a></h2>
 <p><code>zip()</code> 函数用于将可迭代对象作为参数，将对象中对应的元素<strong>打包</strong>成一个个元组，然后返回由这些元组组成的列表。</p>
 <p>如下：</p>
@@ -936,13 +1049,6 @@ b = [5, 6, 7]
 list(zip(a, b))  # [(1, 5), (2, 6), (3, 7)]
 </code></pre>
 <h2><a class="header" href="#mapfilterreduce" id="mapfilterreduce"><code>map</code>、<code>filter</code>、<code>reduce</code></a></h2>
-<p><code>map</code>、<code>filter</code>、<code>reduce</code> 同属于高阶函数，接受函数为参数，或者把函数作为结果返回的函数是<strong>高阶函数</strong>（higher-order function）。</p>
-<ul>
-<li><code>map()</code>：<code>map()</code> 函数返回一个可迭代对象，里面的元素是把第一个参数（一个函数）应用到第二个参数（一个可迭代对象）中各个元素上得到的结果</li>
-<li><code>filter()</code></li>
-<li><code>reduce()</code></li>
-</ul>
-<p>如下：</p>
 <pre><code class="language-python">from functools import reduce
 from operator import add
 
@@ -958,13 +1064,11 @@ def is_odd(n):
 
 list(filter(is_odd, range(1, 11)))  # [1, 3, 5, 7, 9]
 </code></pre>
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/howiezhao/python-notebook/blob/master/notebook/05-functions.ipynb">函数</a></li>
+</ol>
 <h2><a class="header" href="#allany" id="allany"><code>all</code>、<code>any</code></a></h2>
-<p><code>all</code>、<code>any</code> 同属归约函数，<strong>归约函数</strong>是把某个操作连续应用到序列的元素上，累计之前的结果，把一系列值<strong>归约</strong>成一个值。</p>
-<ul>
-<li><code>all(iterable)</code>：如果 <code>iterable</code> 的每个元素都是真值，返回 <code>True</code>；<code>all([])</code> 返回 <code>True</code>。</li>
-<li><code>any(iterable)</code>：只要 <code>iterable</code> 中有元素是真值，就返回 <code>True</code>；<code>any([])</code> 返回 <code>False</code>。</li>
-</ul>
-<p>如下：</p>
 <pre><code class="language-python">lis1 = [True, True, True]
 lis2 = [True, True, False]
 lis3 = [False, False, False]
@@ -977,9 +1081,80 @@ any(lis1)  # True
 any(lis2)  # True
 any(lis3)  # False
 </code></pre>
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/howiezhao/python-notebook/blob/master/notebook/05-functions.ipynb">函数</a></li>
+</ol>
 <h2><a class="header" href="#读写文件" id="读写文件">读写文件</a></h2>
-<h2><a class="header" href="#类方法静态方法实例方法" id="类方法静态方法实例方法">类方法、静态方法、实例方法</a></h2>
+<pre><code class="language-python">with open('file.txt', 'r') as file:
+    print(file.read())
+
+with open('file.txt', 'w') as file:
+    file.write('hello')
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>r</code>：读</li>
+<li><code>w</code>：写</li>
+<li><code>b</code>：二进制模式</li>
+<li><code>a</code>：追加</li>
+<li><code>+</code>：可读可写</li>
+</ul>
+<h2><a class="header" href="#classmethod类方法与-staticmethod静态方法" id="classmethod类方法与-staticmethod静态方法">classmethod（类方法）与 staticmethod（静态方法）</a></h2>
+<ul>
+<li>classmethod：定义操作类，而不是操作实例的方法。</li>
+<li>staticmethod：就是普通的函数，只是碰巧在类的定义体中，而不是在模块层定义。</li>
+</ul>
+<p><code>classmethod</code> 改变了调用方法的方式，因此类方法的第一个参数是类本身，而不是实例。classmethod 最常见的用途是定义备选构造方法。按照约定，类方法的第一个参数名为 <code>cls</code>（但是 Python 不介意具体怎么命名）。</p>
+<p><code>staticmethod</code> 装饰器也会改变方法的调用方式，但是第一个参数不是特殊的值。</p>
+<p><code>classmethod</code> 装饰器非常有用，<code>staticmethod</code> 则不是特别有用。如果想定义不需要与类交互的函数，那么在模块中定义就好了。有时，函数虽然从不处理类，但是函数的功能与类紧密相关，因此想把它放在近处。即便如此，在同一模块中的类前面或后面定义函数也就行了。</p>
+<pre><code class="language-python">class Demo:
+    @classmethod
+    def klassmeth(*args):
+        return args
+
+    @staticmethod
+    def staticmeth(*args):
+        return args
+
+
+print(Demo.klassmeth())  # (&lt;class '__main__.Demo'&gt;,)
+print(Demo.klassmeth('spam'))  # (&lt;class '__main__.Demo'&gt;, 'spam')
+print(Demo().klassmeth())  # (&lt;class '__main__.Demo'&gt;,)
+
+print(Demo.staticmeth())  # ()
+print(Demo.staticmeth('spam'))  # ('spam',)
+print(Demo().staticmeth())  # ()
+print(staticmeth('spam'))  # NameError: name 'staticmeth' is not defined
+</code></pre>
+<p>参考：</p>
+<ol>
+<li><a href="https://book.douban.com/subject/27028517/">Luciano Ramalho.流畅的Python[M].北京:人民邮电出版社,2017:208-210.</a></li>
+<li><a href="https://foofish.net/guide-python-static-class-abstract-methods.html">如何在Python中正确使用static、class、abstract方法</a></li>
+</ol>
 <h2><a class="header" href="#is-与--的区别" id="is-与--的区别"><code>is</code> 与 <code>==</code> 的区别</a></h2>
+<p><code>==</code> 运算符比较两个对象的值（对象中保存的数据），而 <code>is</code> 运算符比较对象的标识（或称编号）。如下：</p>
+<pre><code class="language-python">a = [1, 2, 3]
+b = [1, 2, 3]
+a == b  # True
+a is b  # False
+</code></pre>
+<p>以下引用自 <a href="https://docs.python.org/zh-cn/3/reference/datamodel.html">Python 语言参考：3.数据模型</a>：</p>
+<blockquote>
+<p>每个对象都有各自的编号、类型和值。一个对象被创建后，它的 <em>编号</em> 就绝不会改变；你可以将其理解为该对象在内存中的地址。 '<code>is</code>' 运算符可以比较两个对象的编号是否相同；<code>id()</code> 函数能返回一个代表其编号的整型数。</p>
+</blockquote>
+<p>通常，我们关注的是值，而不是标识，因此 Python 代码中 <code>==</code> 出现的频率比 <code>is</code> 高。</p>
+<p>然而，在变量和单例值之间比较时，应该使用 <code>is</code>。目前，最常使用 <code>is</code> 检查变量绑定的值是不是 <code>None</code>。下面是推荐的写法：</p>
+<pre><code class="language-python">x is None
+</code></pre>
+<p>否定的正确写法是：</p>
+<pre><code class="language-python">x is not None
+</code></pre>
+<p><code>is</code> 运算符比 <code>==</code> 速度快，因为它不能重载，所以 Python 不用寻找并调用特殊方法，而是直接比较两个整数 ID。而 <code>a == b</code> 是语法糖，等同于 <code>a.__eq__(b)</code>。继承自 <code>object</code> 的 <code>__eq__</code> 方法比较两个对象的 ID，结果与 <code>is</code> 一样。但是多数内置类型使用更有意义的方式覆盖了 <code>__eq__</code> 方法，会考虑对象属性的值。相等性测试可能涉及大量处理工作，例如，比较大型集合或嵌套层级深的结构时。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://book.douban.com/subject/27028517/">Luciano Ramalho.流畅的Python[M].北京:人民邮电出版社,2017:185-186.</a></li>
+</ol>
 <h2><a class="header" href="#node-和-tornado-快是因为事件驱动和异步非阻塞" id="node-和-tornado-快是因为事件驱动和异步非阻塞">Node 和 Tornado 快是因为：事件驱动和异步非阻塞</a></h2>
 <h2><a class="header" href="#python-是非真实并行的假多线程对-cpu-密集型不友善" id="python-是非真实并行的假多线程对-cpu-密集型不友善">Python 是非真实并行的“假多线程”，对 CPU 密集型不友善</a></h2>
 <h2><a class="header" href="#python-中数组与链表的区别" id="python-中数组与链表的区别">Python 中数组与链表的区别</a></h2>
