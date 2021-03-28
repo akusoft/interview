@@ -177,6 +177,18 @@ drwxrwxrwx 1 howie howie   512 Jul 21  2018 apue
 </ul>
 <h2><a class="header" href="#linux-进程状态" id="linux-进程状态">Linux 进程状态</a></h2>
 <p><a href="https://zhuanlan.zhihu.com/p/344725512">https://zhuanlan.zhihu.com/p/344725512</a></p>
+<h2><a class="header" href="#查看端口占用情况" id="查看端口占用情况">查看端口占用情况</a></h2>
+<ul>
+<li><code>lsof -i:端口号</code></li>
+<li><code>netstat -pantu | grep 端口号</code></li>
+</ul>
+<h2><a class="header" href="#杀掉某个进程" id="杀掉某个进程">杀掉某个进程</a></h2>
+<p><code>kill -9 pid</code>，<code>kill</code> 表示向某个进程发送一个信号，<code>-9</code> 表示杀死信号。</p>
+<h2><a class="header" href="#重命名" id="重命名">重命名</a></h2>
+<ul>
+<li><code>mv</code></li>
+<li><code>rename</code></li>
+</ul>
 
                     </main>
 

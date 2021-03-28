@@ -363,6 +363,8 @@ client_socket.close()
 <p>原因：可能是客户端或服务器端代码中未关闭 socket 导致，即缺少 <code>socket.close()</code>。</p>
 <h2><a class="header" href="#为什么-tcp-三次握手" id="为什么-tcp-三次握手">为什么 TCP 三次握手</a></h2>
 <p>参考：<a href="https://draveness.me/whys-the-design-tcp-three-way-handshake/">为什么 TCP 建立连接需要三次握手</a></p>
+<h2><a class="header" href="#为什么-tcp-四次挥手" id="为什么-tcp-四次挥手">为什么 TCP 四次挥手</a></h2>
+<p>参考：<a href="https://www.zhihu.com/question/63264012">TCP为什么是四次挥手，而不是三次？</a></p>
 <h2><a class="header" href="#为什么-tcp-有-time_wait" id="为什么-tcp-有-time_wait">为什么 TCP 有 TIME_WAIT</a></h2>
 <p>参考：<a href="https://draveness.me/whys-the-design-tcp-time-wait/">为什么 TCP 协议有 TIME_WAIT 状态</a></p>
 <h2><a class="header" href="#粘包" id="粘包">粘包</a></h2>
@@ -867,6 +869,18 @@ drwxrwxrwx 1 howie howie   512 Jul 21  2018 apue
 </ul>
 <h2><a class="header" href="#linux-进程状态" id="linux-进程状态">Linux 进程状态</a></h2>
 <p><a href="https://zhuanlan.zhihu.com/p/344725512">https://zhuanlan.zhihu.com/p/344725512</a></p>
+<h2><a class="header" href="#查看端口占用情况" id="查看端口占用情况">查看端口占用情况</a></h2>
+<ul>
+<li><code>lsof -i:端口号</code></li>
+<li><code>netstat -pantu | grep 端口号</code></li>
+</ul>
+<h2><a class="header" href="#杀掉某个进程" id="杀掉某个进程">杀掉某个进程</a></h2>
+<p><code>kill -9 pid</code>，<code>kill</code> 表示向某个进程发送一个信号，<code>-9</code> 表示杀死信号。</p>
+<h2><a class="header" href="#重命名" id="重命名">重命名</a></h2>
+<ul>
+<li><code>mv</code></li>
+<li><code>rename</code></li>
+</ul>
 <h1><a class="header" href="#分布式系统" id="分布式系统">分布式系统</a></h1>
 <h2><a class="header" href="#cap-定理" id="cap-定理">CAP 定理</a></h2>
 <p>参考<a href="http://www.ruanyifeng.com/blog/2018/07/cap.html">CAP 定理的含义</a></p>
@@ -890,12 +904,34 @@ drwxrwxrwx 1 howie howie   512 Jul 21  2018 apue
 <h1><a class="header" href="#kafka" id="kafka">Kafka</a></h1>
 <h1><a class="header" href="#docker" id="docker">Docker</a></h1>
 <h2><a class="header" href="#dockerfile-中-cmd-与-entrypoint-区别" id="dockerfile-中-cmd-与-entrypoint-区别">Dockerfile 中 <code>CMD</code> 与 <code>ENTRYPOINT</code> 区别</a></h2>
-<p>把可能需要变动的参数写到 <code>CMD</code> 里面。
-然后你可以在 <code>docker run</code> 里指定参数，
-这样 <code>CMD</code> 里的参数(这里是-c) 就会被覆盖掉而 <code>ENTRYPOINT</code> 里的不被覆盖。</p>
+<p><code>CMD</code> 用于指定默认的容器主进程的启动命令。在运行时可以指定新的命令来替代镜像设置中的这个默认命令。</p>
+<p>比如，ubuntu 镜像默认的 <code>CMD</code> 是 <code>/bin/bash</code>，若直接 <code>docker run -it ubuntu</code> 的话，会直接进入 <code>bash</code>。也可以在运行时指定运行别的命令，如 <code>docker run -it ubuntu cat /etc/os-release</code>。这就是用 <code>cat /etc/os-release</code> 命令替换了默认的 <code>/bin/bash</code> 命令了，输出了系统版本信息。</p>
+<p><code>ENTRYPOINT</code> 和 <code>CMD</code> 一样，都是在指定容器启动程序及参数。<code>ENTRYPOINT</code> 在运行时也可以替代，不过比 <code>CMD</code> 要略显繁琐，需要通过 <code>docker run</code> 的参数 <code>--entrypoint</code> 来指定。</p>
+<p>当指定了 <code>ENTRYPOINT</code> 后，<code>CMD</code> 的含义就发生了改变，不再是直接的运行其命令，而是将 <code>CMD</code> 的内容作为参数传给 <code>ENTRYPOINT</code> 指令，换句话说实际执行时，将变为：</p>
+<pre><code class="language-dockerfile">&lt;ENTRYPOINT&gt; &quot;&lt;CMD&gt;&quot;
+</code></pre>
+<p><code>&lt;ENTRYPOINT&gt; &quot;&lt;CMD&gt;&quot;</code> 这种形式有以下好处：</p>
+<ul>
+<li>让镜像变成像命令一样使用：将命令用 <code>ENTRYPOINT</code> 书写，将参数用 <code>CMD</code> 传递</li>
+<li>应用运行前的准备工作：这些准备工作是和容器 <code>CMD</code> 无关的，无论 <code>CMD</code> 为什么，都需要事先进行一个预处理的工作。这种情况下，可以写一个脚本，然后放入 <code>ENTRYPOINT</code> 中去执行，而这个脚本会将接到的参数（也就是 <code>&lt;CMD&gt;</code>）作为命令，在脚本最后执行。</li>
+</ul>
 <h2><a class="header" href="#dockerfile-中-copy-与-add-区别" id="dockerfile-中-copy-与-add-区别">Dockerfile 中 <code>COPY</code> 与 <code>ADD</code> 区别</a></h2>
-<p>ADD 可以跟链接直接获取网络文件，复制压缩文件时会自动解压。</p>
+<p><code>COPY</code> 将当前工作目录中的文件或目录复制到镜像内的目标位置。类似 Linux 中的 <code>cp</code>。</p>
+<p><code>ADD</code> 除了满足以上所述的 <code>COPY</code> 的作用外，还增加了以下功能：</p>
+<ul>
+<li>复制压缩文件时会自动解压</li>
+<li>可以跟链接直接获取网络文件</li>
+</ul>
+<p>在 <code>COPY</code> 和 <code>ADD</code> 指令中选择的时候，可以遵循这样的原则，所有的文件复制均使用 <code>COPY</code> 指令，仅在需要自动解压缩的场合使用 <code>ADD</code>。</p>
+<h2><a class="header" href="#docker-run-和-docker-start" id="docker-run-和-docker-start"><code>docker run</code> 和 <code>docker start</code></a></h2>
+<ul>
+<li><code>docker run</code>：从指定的 image 文件生成一个正在运行的容器实例</li>
+<li><code>docker start</code>：启动指定的已停止的容器实例</li>
+</ul>
 <h1><a class="header" href="#git" id="git">Git</a></h1>
+<h2><a class="header" href="#git-merge-和-git-rebase" id="git-merge-和-git-rebase"><code>git merge</code> 和 <code>git rebase</code></a></h2>
+<h2><a class="header" href="#git-pull-和-git-fetch" id="git-pull-和-git-fetch"><code>git pull</code> 和 <code>git fetch</code></a></h2>
+<h2><a class="header" href="#git-blame" id="git-blame"><code>git blame</code></a></h2>
 <h1><a class="header" href="#python" id="python">Python</a></h1>
 <h2><a class="header" href="#值类型和引用类型" id="值类型和引用类型">值类型和引用类型</a></h2>
 <ul>
