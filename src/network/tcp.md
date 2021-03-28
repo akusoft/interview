@@ -8,6 +8,10 @@
 
 参考：[为什么 TCP 建立连接需要三次握手](https://draveness.me/whys-the-design-tcp-three-way-handshake/)
 
+## 为什么 TCP 四次挥手
+
+参考：[TCP为什么是四次挥手，而不是三次？](https://www.zhihu.com/question/63264012)
+
 ## 为什么 TCP 有 TIME_WAIT
 
 参考：[为什么 TCP 协议有 TIME_WAIT 状态](https://draveness.me/whys-the-design-tcp-time-wait/)

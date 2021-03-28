@@ -30,3 +30,17 @@ drwxrwxrwx 1 howie howie   512 Jul 21  2018 apue
 ## Linux 进程状态
 
 <https://zhuanlan.zhihu.com/p/344725512>
+
+## 查看端口占用情况
+
+- `lsof -i:端口号`
+- `netstat -pantu | grep 端口号`
+
+## 杀掉某个进程
+
+`kill -9 pid`，`kill` 表示向某个进程发送一个信号，`-9` 表示杀死信号。
+
+## 重命名
+
+- `mv`
+- `rename`
